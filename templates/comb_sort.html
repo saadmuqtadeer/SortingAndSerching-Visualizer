@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comb Sort Integer</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #array-container {
+      display: inline-block;
+      height: 10px;
+    }
+
+    .bar {
+      display: inline-block;
+      background-color: #3498db;
+      margin: 0 1px;
+      width: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+    <a  href="{% url 'home' %}">HOME</a>
+    <a  href="{% url 'comb' %}">COMB HOME</a>
+  </center>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  
+  {% if data %}
+  Given Data: {{ data }}<br>
+  {% endif %}
+ 
+
+  <div class="container">
+    <div id="array-container"></div>
+    <br>
+    <button onclick="combSort()">Comb Sort</button>
+  </div>
+
+  <script>
+    let array1 = "{{data}}";
+    var array = array1.split(',').map(Number); // Convert strings to integers
+
+    function generateArray() {
+      const arrayContainer = document.getElementById("array-container");
+      arrayContainer.innerHTML = "";
+      for (let i = 0; i < array.length; i++) {
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        bar.style.height = `${array[i] * 5}px`; // Adjust height multiplier as needed
+        arrayContainer.appendChild(bar);
+      }
+    }
+
+    async function combSort() {
+      const bars = document.querySelectorAll(".bar");
+      let gap = array.length;
+      let shrink = 1.3;
+      let swapped = true;
+
+      while (gap > 1 || swapped) {
+        gap = Math.floor(gap / shrink);
+        if (gap < 1) gap = 1;
+
+        let i = 0;
+        swapped = false;
+
+        while (i + gap < array.length) {
+          if (array[i] > array[i + gap]) {
+            swap(i, i + gap);
+            let tempHeight = bars[i].style.height;
+            bars[i].style.height = bars[i + gap].style.height;
+            bars[i + gap].style.height = tempHeight;
+            swapped = true;
+          }
+          i++;
+        }
+        await new Promise(resolve => setTimeout(resolve, 100)); // Adjust delay as needed
+      }
+    }
+
+    function swap(i, j) {
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+
+    generateArray();
+  </script>
+
+<h3>Steps:</h3>
+<ol>
+  {% for i in extra_list %}
+  <li>{{ i }}</li><br>
+  {% endfor %}
+</ol>
+
+</body>
+
+</html>

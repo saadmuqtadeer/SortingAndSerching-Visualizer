@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="submit">
+    </form>
+    Given Data:{{list_data}}<br>
+    element to search is:{{search}}<br>
+    Element found at : {{count}}<br>
+   
+   <a  href="{% url 'home' %}">HOME</a>
+    </body>                  

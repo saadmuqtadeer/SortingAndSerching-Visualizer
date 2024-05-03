@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+
+      .header {
+        font-size: 35px;
+        text-align: center;
+      }
+
+      #array {
+        background-color: white;
+        height: 305px;
+        width: 598px;
+        margin: auto;
+        position: relative;
+        margin-top: 64px;
+      }
+
+      .bar {
+        width: 28px;
+        background-color: #6b5b95;
+        position: absolute;
+        bottom: 0px;
+        transition: 0.2s all ease;
+      }
+
+      .bar_id {
+        position: absolute;
+        color: black;
+        margin-top: -25px; /* Adjust position of text */
+        width: 100%;
+        text-align: center;
+        font-size: 14px; /* Adjust font size as needed */
+      }
+    </style>
+</head>
+
+<body>
+<br />
+
+<center><a  href="{% url 'home' %}">HOME</a></center>
+
+<form method="POST">
+    {% csrf_token %}
+    Array: <input type="text" id="arrayInput" /><br />
+    Search Element: <input type="text" id="searchInput" /><br />
+    <button type="button" onclick="parseInputArray()">Generate Array and Search</button>
+</form>
+
+<div id="array"></div>
+<p id="text"></p>
+
+<script>
+    var container = [];
+    var arrayContainer = document.getElementById("array");
+
+    // Function to generate the array of blocks
+    function generatearray() {
+        for (let i = 0; i < container.length; i++) {
+            // Return a value from 1 to 100 (both inclusive)
+            const bar = document.createElement("div");
+            bar.classList.add("bar");
+            bar.style.height = `${container[i] * 5}px`; // Adjust height multiplier as needed
+            bar.style.left = `${i * 30}px`; // Adjust the spacing between bars
+            
+            // Create and append text element to display value
+            const text = document.createElement("div");
+            text.classList.add("bar_id");
+            text.textContent = container[i]; // Set the text content to the value of the element
+            bar.appendChild(text); // Append text element to the bar
+            
+            arrayContainer.appendChild(bar);
+        }
+    }
+
+    // Asynchronous LinearSearch function
+    async function LinearSearch(delay = 300) {
+        var blocks = document.querySelectorAll(".bar");
+        var output = document.getElementById("text");
+        // Extracting the value entered by the user
+        var num = parseInt(document.getElementById("searchInput").value);
+        console.log(num);
+        // Changing the color of all the blocks to violet
+        for (var i = 0; i < blocks.length; i += 1) {
+            blocks[i].style.backgroundColor = "#6b5b95";
+        }
+
+        output.innerText = "";
+
+        var flag = 0;
+        // LinearSearch Algorithm
+        for (var i = 0; i < blocks.length; i += 1) {
+            // Changing the color of current block to red
+            blocks[i].style.backgroundColor = "#FF4949";
+
+            // To wait for .1 sec
+            await new Promise((resolve) =>
+                setTimeout(() => {
+                    resolve();
+                }, delay)
+            );
+
+            // Extracting the value of current block
+            var value = container[i];
+
+            // To compare block value with entered value
+            if (value == num) {
+                flag = 1;
+                output.innerText = "Element Found";
+                blocks[i].style.backgroundColor = "blue";
+                break;
+            } else {
+                // Changing the color to the previous one
+                blocks[i].style.backgroundColor = "yellow";
+            }
+        }
+        // When element is not found in the array
+        if (flag == 0) {
+            output.innerText = "Element Not Found";
+        }
+    }
+
+    // Function to parse input array from string
+    function parseInputArray() {
+        var inputArray = document.getElementById("arrayInput").value;
+        container = inputArray.split(',').map(Number);
+        arrayContainer.innerHTML = ""; // Clear previous bars
+        generatearray();
+        LinearSearch(); // Perform search after generating bars
+    }
+</script>
+</body>
+</html>

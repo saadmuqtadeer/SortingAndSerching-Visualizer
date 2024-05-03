@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+
+  .header {
+    font-size: 35px;
+    text-align: center;
+  }
+
+  #array {
+    background-color: white;
+    height: 305px;
+    width: 598px;
+    margin: auto;
+    position: relative;
+    margin-top: 64px;
+  }
+
+  .block {
+    width: 28px;
+    background-color: #6b5b95;
+    position: absolute;
+    bottom: 0px;
+    transition: 0.2s all ease;
+  }
+
+  .block_id {
+    position: absolute;
+    color: black;
+    margin-top: -20px;
+    width: 100%;
+    text-align: center;
+  }
+</style>
+</head>
+
+<body>
+<br />
+<a  href="{% url 'home' %}">HOME</a>
+<a  href="{% url 'binary' %}">BINARY HOME</a>
+
+<div id="array"></div>
+<br /><br />
+
+<div style="text-align: center">
+  <label for="arrayInput">Enter array elements (comma-separated):</label>
+  <input type="text" id="arrayInput" name="arrayInput" />
+  <br /><br />
+  <label for="numInput">String to be Searched:</label>
+  <input type="text" id="numInput" name="numInput" />
+  <br /><br />
+  <button onclick="sortAndSearch()">Sort & Search</button>
+  <br />
+  <br />
+  <div id="text"></div>
+</div>
+
+<script>
+  var container = document.getElementById("array");
+
+  function generateBlocks(arr) {
+    container.innerHTML = ''; // Clear previous blocks
+    for (var i = 0; i < arr.length; i++) {
+      var value = arr[i];
+
+      var array_ele = document.createElement("div");
+      array_ele.classList.add("block");
+      array_ele.style.height = `${value.charCodeAt(0) * 3}px`; // Use ASCII value for height
+      array_ele.style.transform = `translate(${i * 30}px)`;
+
+      var array_ele_label = document.createElement("label");
+      array_ele_label.classList.add("block_id");
+      array_ele_label.innerText = value;
+
+      array_ele.appendChild(array_ele_label);
+      container.appendChild(array_ele);
+    }
+  }
+
+  async function sortAndSearch() {
+    var inputArray = document.getElementById("arrayInput").value.split(',');
+    var str = document.getElementById("numInput").value;
+    var output = document.getElementById("text");
+
+    inputArray.sort();
+
+    generateBlocks(inputArray);
+
+    var blocks = document.querySelectorAll(".block");
+    for (var i = 0; i < blocks.length; i += 1) {
+      blocks[i].style.backgroundColor = "#6b5b95";
+    }
+
+    output.innerText = "";
+
+    var start = 0;
+    var end = inputArray.length - 1;
+    var flag = 0;
+    while (start <= end) {
+      var mid = Math.floor((start + end) / 2);
+      blocks[mid].style.backgroundColor = "#FF4949";
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      var value = inputArray[mid];
+      if (value == str) {
+        output.innerText = "Element Found";
+        blocks[mid].style.backgroundColor = "#13CE66";
+        flag = 1;
+        break;
+      }
+      if (value.localeCompare(str) > 0) {
+        end = mid - 1;
+        blocks[mid].style.backgroundColor = "blue";
+      } else {
+        start = mid + 1;
+        blocks[mid].style.backgroundColor = "yellow";
+      }
+    }
+    if (flag === 0) {
+      output.innerText = "Element Not Found";
+    }
+  }
+</script>
+</body>
+</html>

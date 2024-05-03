@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pancake Sort Integer</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #array-container {
+      display: inline-block;
+      height: 10px;
+    }
+
+    .bar {
+      display: inline-block;
+      background-color: #3498db;
+      margin: 0 1px;
+      width: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+    <a  href="{% url 'home' %}">HOME</a>
+    <a  href="{% url 'pancake' %}">PANCAKE HOME</a>
+  </center>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  {% if data %}
+  Given Data: {{ data }}<br>
+  {% endif %}
+  
+  <div class="container">
+    <div id="array-container"></div>
+    <br>
+    <button onclick="pancakeSort()">Pancake Sort</button>
+  </div>
+
+  <script>
+    let array1 = "{{data}}";
+    var array = array1.split(',').map(Number); // Convert strings to integers
+
+    function generateArray() {
+      const arrayContainer = document.getElementById("array-container");
+      arrayContainer.innerHTML = "";
+      for (let i = 0; i < array.length; i++) {
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        bar.style.height = `${array[i] * 5}px`; // Adjust height multiplier as needed
+        arrayContainer.appendChild(bar);
+      }
+    }
+
+    async function flip(arr, i) {
+      let left = 0;
+      while (left < i) {
+        let temp = arr[left];
+        arr[left] = arr[i];
+        arr[i] = temp;
+        left++;
+        i--;
+      }
+    }
+
+    async function pancakeSort() {
+      const bars = document.querySelectorAll(".bar");
+      let n = array.length;
+      for (let curr_size = n; curr_size > 1; --curr_size) {
+        let mi = await findMax(array, curr_size);
+        if (mi != curr_size - 1) {
+          await flip(array, mi);
+          await flip(array, curr_size - 1);
+          for (let i = 0; i < curr_size; ++i) {
+            bars[i].style.height = `${array[i] * 5}px`;
+          }
+          await new Promise(resolve => setTimeout(resolve, 100)); // Adjust delay as needed
+        }
+      }
+    }
+
+    async function findMax(arr, n) {
+      let mi, i;
+      for (mi = 0, i = 0; i < n; ++i) {
+        if (arr[i] > arr[mi]) {
+          mi = i;
+        }
+      }
+      return mi;
+    }
+
+    generateArray();
+  </script>
+
+<h3>Steps:</h3>
+<ol>
+  {% for i in extra_list %}
+  <li>{{ i }}</li><br>
+  {% endfor %}
+</ol>
+
+</body>
+
+</html>

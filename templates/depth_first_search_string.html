@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFS Visualizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #canvas {
+      border: 1px solid #000;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <center><a  href="{% url 'home' %}">HOME</a></center>
+  <canvas id="canvas" width="800" height="400"></canvas>
+  <button onclick="startBFS()">Start BFS</button>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const nodeRadius = 30;
+    const nodeGap = 60;
+    const animationSpeed = 1000;
+
+    class Node {
+      constructor(value, x, y) {
+        this.value = value;
+        this.x = x;
+        this.y = y;
+        this.visited = false;
+        this.found = false;
+        this.parent = null;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, nodeRadius, 0, Math.PI * 2);
+        if (this.found) {
+          ctx.fillStyle = '#00ff00'; // Green color for found node
+        } else if (this.visited) {
+          ctx.fillStyle = '#ff0000'; // Red color for visited node
+        } else {
+          ctx.fillStyle = '#0000ff'; // Blue color for unvisited node
+        }
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.value, this.x, this.y);
+      }
+
+      drawArrow(parent) {
+        if (parent) {
+          ctx.beginPath();
+          ctx.moveTo(parent.x, parent.y + nodeRadius);
+          ctx.lineTo(this.x, this.y - nodeRadius);
+          ctx.strokeStyle = '#000';
+          ctx.stroke();
+        }
+      }
+    }
+
+    function generateTree(elements) {
+      const rootX = canvas.width / 2;
+      const rootY = nodeGap;
+      const root = new Node(elements[0], rootX, rootY);
+      const queue = [{ node: root, depth: 1 }];
+
+      while (queue.length > 0) {
+        const { node, depth } = queue.shift();
+        const childDepth = depth + 1;
+        const leftChildIndex = 2 * (depth - 1) + 1;
+        const rightChildIndex = 2 * (depth - 1) + 2;
+
+        if (leftChildIndex < elements.length) {
+          const leftChildX = node.x - Math.pow(2, node.parent ? (depth - 2) : (depth - 1)) * nodeGap;
+          const leftChildY = node.y + nodeGap;
+          const leftChild = new Node(elements[leftChildIndex], leftChildX, leftChildY);
+          leftChild.parent = node;
+          node.leftChild = leftChild;
+          queue.push({ node: leftChild, depth: childDepth });
+        }
+
+        if (rightChildIndex < elements.length) {
+          const rightChildX = node.x + Math.pow(2, node.parent ? (depth - 2) : (depth - 1)) * nodeGap;
+          const rightChildY = node.y + nodeGap;
+          const rightChild = new Node(elements[rightChildIndex], rightChildX, rightChildY);
+          rightChild.parent = node;
+          node.rightChild = rightChild;
+          queue.push({ node: rightChild, depth: childDepth });
+        }
+      }
+
+      return root;
+    }
+
+    function drawTree(root) {
+      const queue = [root];
+      while (queue.length > 0) {
+        const node = queue.shift();
+        node.draw();
+        if (node.parent) {
+          node.drawArrow(node.parent);
+        }
+        if (node.leftChild) {
+          queue.push(node.leftChild);
+        }
+        if (node.rightChild) {
+          queue.push(node.rightChild);
+        }
+      }
+    }
+
+    function startBFS() {
+      const inputString = prompt("Enter the string:");
+      const searchChar = prompt("Enter the character to search for:");
+      const inputValues = inputString.split('');
+      const root = generateTree(inputValues);
+      bfs(root, searchChar);
+    }
+
+    function bfs(root, searchChar) {
+      const queue = [root];
+      let currentIndex = 0;
+
+      function traverse() {
+        if (currentIndex >= queue.length) {
+          return;
+        }
+
+        const node = queue[currentIndex];
+        currentIndex++;
+
+        if (node.value === searchChar) {
+          node.found = true;
+          drawTree(root);
+          return;
+        }
+
+        if (node.leftChild) {
+          queue.push(node.leftChild);
+        }
+        if (node.rightChild) {
+          queue.push(node.rightChild);
+        }
+        node.visited = true;
+        drawTree(root);
+
+        // Delay for visualization
+        setTimeout(traverse, animationSpeed);
+      }
+
+      traverse();
+    }
+  </script>
+</body>
+</html>

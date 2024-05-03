@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm</title>
+    <style>
+        /* .navbar {
+            background-color: lightblue;
+            overflow: hidden;
+          
+        } */
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: blue;
+            text-align: center;
+            padding: 14px 46px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            background-color: blue;
+            color: white;
+        }
+
+        .button_sort {
+            float: left;
+            width: 50%;
+        }
+
+        .algorithms {
+            float: right;
+            width: 50%;
+            margin-top: 25px;
+        }
+
+        .sort {
+            display: inline-block;
+            width: 70px;
+            height: 40px;
+            margin: 1px;
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid blue;
+            border-radius: 5px;
+            background-color: lightblue;
+            color: blue;
+            font-weight: bold;
+        }
+
+        .sort:hover {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="navbar">
+        <a href="#home">Home</a> -->
+        
+    </div>
+
+    <div class="button_sort">
+        <br>
+        <h1 style="color: blue;" id="sorting">SORTING</h1>
+        <h1 style="color: blue;" id="sorting"> TECHNIQUES</h1>
+        <button><a href="{% url 'bubble' %}" class='sort'>Bubble Sort</a></button>
+        <br>
+        <button><a href="{% url 'oddeven' %}" class='sort'>Odd Even Sort</a></button>
+        <br> 
+        <button><a href="{% url 'selection' %}" class='sort'>Selection Sort</a></button>
+        <br> 
+        <button><a href="{% url 'insertion' %}" class='sort'>Insertion Sort</a></button> 
+        <br>
+        <button><a href="{% url 'quick' %}" class='sort'>Quick Sort</a></button> 
+        <br>
+        <button><a href="{% url 'cocktail' %}" class='sort'>Cocktail Sort</a></button> 
+        <br>
+        <button><a href="{% url 'shell' %}" class='sort'>Shell Sort</a></button> 
+        <br>
+        <button><a href="{% url 'pancake' %}" class='sort'>Pancake Sort</a></button> 
+        <br>
+        <button><a href="{% url 'comb' %}" class='sort'>Comb Sort</a></button> 
+        <br>
+        <button><a href="{% url 'bogo' %}" class='sort'>Bogo Sort</a></button> 
+    </div>
+    <div class="algorithms">
+        <h1 style="color: blue;" id="algorithms">SEARCHING</h1>
+        <h1 style="color: blue;" id="sorting"> TECHNIQUES</h1>
+        <button><a href="{% url 'linear_search' %}" class='sort'>Linear Search</a></button>
+        <br> 
+        <button><a href="{% url 'binary_search' %}" class='sort'>Binary Search</a></button>
+        <br> 
+        <button><a href="{% url 'breadth_first_search' %}" class='sort'>Breadth First Search</a></button>
+        <br> 
+        <button><a href="{% url 'depth_first_search' %}" class='sort'>Depth First Search</a></button>
+        <br> 
+        <!-- <button><a href="{% url 'a_star' %}" class='sort'>A*</a></button> -->
+    </div>
+
+</body>
+</html>

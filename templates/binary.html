@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>
+            Odd Even Sort
+        </title>
+        <style>
+            .button_sort {
+            float: left;
+            width: 50%;
+        }
+
+        .sort {
+            display: inline-block;
+            width: 70px;
+            height: 50px;
+            margin: 1px;
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid blue;
+            border-radius: 5px;
+            background-color: lightblue;
+            color: blue;
+            font-weight: bold;
+        }
+        </style>
+    </head>
+    <body>
+        <center>
+            <a  href="{% url 'home' %}">HOME</a>
+          </center>
+        <div class="button_sort">
+            <button><a href="{% url 'binary_search' %}" class='sort'>Binary Search</a></button> <br>
+            <button><a  href="{% url 'binary_search_string' %}" class="sort">Binary Search String</a></button>  
+        </div>
+    </body>
+</html>

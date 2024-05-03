@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFS String Visualizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #canvas {
+      border: 1px solid #000;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <center><a  href="{% url 'home' %}">HOME</a></body></center>
+  <canvas id="canvas" width="800" height="400"></canvas>
+  <button onclick="startDFS()">Start DFS</button>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const nodeRadius = 30;
+    const nodeGap = 60;
+    const animationSpeed = 1000;
+    let elementFound = false; // Flag to track whether element is found
+    let root;
+
+    class Node {
+      constructor(value, x, y) {
+        this.value = value;
+        this.x = x;
+        this.y = y;
+        this.visited = false;
+        this.found = false;
+        this.parent = null;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, nodeRadius, 0, Math.PI * 2);
+        if (this.found) {
+          ctx.fillStyle = '#00ff00'; // Green color for found node
+        } else if (this.visited) {
+          ctx.fillStyle = '#ff0000'; // Red color for visited node
+        } else {
+          ctx.fillStyle = '#0000ff'; // Blue color for unvisited node
+        }
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.value, this.x, this.y);
+      }
+
+      drawArrow(parent) {
+        if (parent) {
+          ctx.beginPath();
+          ctx.moveTo(parent.x, parent.y + nodeRadius);
+          ctx.lineTo(this.x, this.y - nodeRadius);
+          ctx.strokeStyle = '#000';
+          ctx.stroke();
+        }
+      }
+    }
+
+    function generateTree(elements) {
+      const rootX = canvas.width / 2;
+      const rootY = nodeGap;
+      const root = new Node(elements[0], rootX, rootY);
+      let index = { val: 0 };
+      root.leftChild = buildTree(elements, index, root, 1);
+      root.rightChild = buildTree(elements, index, root, 2);
+      return root;
+    }
+
+    function buildTree(elements, index, parent, childNumber) {
+      if (index.val >= elements.length) return null;
+      const value = elements[index.val++];
+      if (value === null) return null;
+
+      const depth = parent ? parent.depth + 1 : 1;
+      const x = parent ? parent.x + ((childNumber === 1) ? -nodeGap : nodeGap) : canvas.width / 2;
+      const y = parent ? parent.y + nodeGap : nodeGap;
+      const node = new Node(value, x, y);
+      node.parent = parent;
+      node.depth = depth;
+      node.leftChild = buildTree(elements, index, node, 1);
+      node.rightChild = buildTree(elements, index, node, 2);
+      return node;
+    }
+
+    function drawTree(rootNode) {
+      const queue = [rootNode];
+      while (queue.length > 0) {
+        const node = queue.shift();
+        node.draw();
+        if (node.parent) {
+          node.drawArrow(node.parent);
+        }
+        if (node.leftChild) {
+          queue.push(node.leftChild);
+        }
+        if (node.rightChild) {
+          queue.push(node.rightChild);
+        }
+      }
+    }
+
+    function startDFS() {
+      const inputValues = prompt("Enter the values separated by commas:").split(',').map(value => value.trim());
+      const searchValue = prompt("Enter the value to search for:");
+      root = generateTree(inputValues);
+      dfs(root, searchValue);
+    }
+
+    function dfs(node, searchValue) {
+      if (!node || elementFound) return;
+
+      setTimeout(() => {
+        node.visited = true;
+        drawTree(root);
+
+        if (node.value === searchValue) {
+          node.found = true;
+          drawTree(root);
+          alert(`Value "${searchValue}" found!`);
+          elementFound = true;
+          return;
+        }
+
+        dfs(node.leftChild, searchValue);
+        dfs(node.rightChild, searchValue);
+
+        // Check if DFS is completed and value not found
+        if (node === root && !elementFound) {
+          alert(`Value "${searchValue}" not found!`);
+          return;
+        }
+      }, animationSpeed);
+    }
+  </script>
+</body>
+</html>

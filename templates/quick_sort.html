@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Sort Integer</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #array-container {
+      display: inline-block;
+      height: 10px;
+    }
+
+    .bar {
+      display: inline-block;
+      background-color: #3498db;
+      margin: 0 1px;
+      width: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+    <a  href="{% url 'home' %}">HOME</a>
+    <a  href="{% url 'quick' %}">QUICK HOME</a>
+  </center>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  
+  {% if data %}
+  Given Data: {{ data }}<br>
+  {% endif %}
+ 
+
+  <div class="container">
+    <div id="array-container"></div>
+    <br>
+    <button onclick="quickSort()">Quick Sort</button>
+  </div>
+
+  <script>
+    let array1 = "{{data}}";
+    var array = array1.split(',').map(Number); // Convert strings to integers
+
+    function generateArray() {
+      const arrayContainer = document.getElementById("array-container");
+      arrayContainer.innerHTML = "";
+      for (let i = 0; i < array.length; i++) {
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        bar.style.height = `${array[i] * 5}px`; // Adjust height multiplier as needed
+        arrayContainer.appendChild(bar);
+      }
+    }
+
+    function swap(i, j) {
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+
+    async function quickSort() {
+      await quickSortHelper(array, 0, array.length - 1);
+    }
+
+    async function quickSortHelper(arr, low, high) {
+      if (low < high) {
+        const pivot = await partition(arr, low, high);
+        await quickSortHelper(arr, low, pivot - 1);
+        await quickSortHelper(arr, pivot + 1, high);
+      }
+    }
+
+    async function partition(arr, low, high) {
+      const pivot = arr[high];
+      const bars = document.querySelectorAll(".bar");
+      let i = low - 1;
+      for (let j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+          i++;
+          swap(i, j);
+          await new Promise(resolve => setTimeout(resolve, 100)); // Adjust delay as needed
+          let tempHeight = bars[i].style.height;
+          bars[i].style.height = bars[j].style.height;
+          bars[j].style.height = tempHeight;
+        }
+      }
+      swap(i + 1, high);
+      await new Promise(resolve => setTimeout(resolve, 100)); // Adjust delay as needed
+      let tempHeight = bars[i + 1].style.height;
+      bars[i + 1].style.height = bars[high].style.height;
+      bars[high].style.height = tempHeight;
+      return i + 1;
+    }
+
+    generateArray();
+  </script>
+</body>
+<h3>Steps:</h3>
+<ol>
+  {% for i in extra_list %}
+  <li>{{ i }}</li><br>
+  {% endfor %}
+</ol>
+</html>

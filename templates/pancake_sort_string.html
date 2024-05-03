@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pancake Sort String</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #array-container {
+      display: inline-block;
+      height: 10px;
+    }
+
+    .bar {
+      display: inline-block;
+      background-color: #3498db;
+      margin: 0 1px;
+      width: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+    <center>
+        <a  href="{% url 'home' %}">HOME</a>
+        <a  href="{% url 'pancake' %}">PANCAKE HOME</a>
+      </center>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  {% if data %}
+  Given Data: {{ data }}<br>
+  {% endif %}
+
+  <div class="container">
+    <div id="array-container"></div>
+    <br>
+    <button onclick="pancakeSort()">Pancake Sort</button>
+  </div>
+
+  <script>
+    let array1 = "{{data}}";
+    var array = array1.split(''); // Convert string to array of characters
+
+    function generateArray() {
+      const arrayContainer = document.getElementById("array-container");
+      arrayContainer.innerHTML = "";
+      for (let i = 0; i < array.length; i++) {
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        // Use ASCII value to represent the height of bars
+        bar.style.height = `${array[i].charCodeAt(0) * 5}px`;
+        arrayContainer.appendChild(bar);
+      }
+    }
+
+    async function flip(arr, i) {
+      let start = 0;
+      while (start < i) {
+        await swap(arr, start, i);
+        start++;
+        i--;
+      }
+    }
+
+    async function pancakeSort() {
+      let n = array.length;
+      for (let curr_size = n; curr_size > 1; curr_size--) {
+        let max_index = findMaxIndex(array, curr_size);
+        if (max_index !== curr_size - 1) {
+          await flip(array, max_index);
+          await flip(array, curr_size - 1);
+        }
+      }
+    }
+
+    function findMaxIndex(arr, n) {
+      let max_index = 0;
+      for (let i = 0; i < n; i++) {
+        if (arr[i].charCodeAt(0) > arr[max_index].charCodeAt(0)) {
+          max_index = i;
+        }
+      }
+      return max_index;
+    }
+
+    async function swap(arr, i, j) {
+      let temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+
+      const bars = document.querySelectorAll(".bar");
+      let tempHeight = bars[i].style.height;
+      bars[i].style.height = bars[j].style.height;
+      bars[j].style.height = tempHeight;
+
+      await new Promise(resolve => setTimeout(resolve, 100)); // Adjust delay as needed
+    }
+
+    generateArray();
+  </script>
+
+  <h3>Steps:</h3>
+  <ol>
+    {% for i in extra_list %}
+    <li>{{ i }}</li><br>
+    {% endfor %}
+  </ol>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insertion Sort String</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #array-container {
+      display: inline-block;
+      height: 10px;
+    }
+
+    .bar {
+      display: inline-block;
+      background-color: #3498db;
+      margin: 0 1px;
+      width: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+    <center>
+        <a  href="{% url 'home' %}">HOME</a>
+        <a  href="{% url 'insertion' %}">INSERTION HOME</a>
+      </center>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  {% if data %}
+  Given Data: {{ data }}<br>
+  {% endif %}
+
+  <div class="container">
+    <div id="array-container"></div>
+    <br>
+    <button onclick="insertionSort()">Insertion Sort</button>
+  </div>
+
+  <script>
+    let array1 = "{{data}}";
+    var array = array1.split(''); // Convert string to array of characters
+
+    function generateArray() {
+      const arrayContainer = document.getElementById("array-container");
+      arrayContainer.innerHTML = "";
+      for (let i = 0; i < array.length; i++) {
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        // Use ASCII value to represent the height of bars
+        bar.style.height = `${array[i].charCodeAt(0) * 5}px`; 
+        arrayContainer.appendChild(bar);
+      }
+    }
+
+    async function insertionSort() {
+      const bars = document.querySelectorAll(".bar");
+      for (let i = 1; i < array.length; i++) {
+        let currentChar = array[i];
+        let j = i - 1;
+        while (j >= 0 && array[j].charCodeAt(0) > currentChar.charCodeAt(0)) {
+          array[j + 1] = array[j];
+          bars[j + 1].style.height = bars[j].style.height;
+          j--;
+          await new Promise(resolve => setTimeout(resolve, 100)); // Adjust delay as needed
+        }
+        array[j + 1] = currentChar;
+        bars[j + 1].style.height = `${currentChar.charCodeAt(0) * 5}px`;
+      }
+    }
+
+    generateArray();
+  </script>
+
+<h3>Steps:</h3>
+<ol>
+  {% for i in extra_list %}
+  <li>{{ i }}</li><br>
+  {% endfor %}
+</ol>
+</body>
+
+</html>

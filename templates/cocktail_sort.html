@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cocktail Sort Integer</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #array-container {
+      display: inline-block;
+      height: 10px;
+    }
+
+    .bar {
+      display: inline-block;
+      background-color: #3498db;
+      margin: 0 1px;
+      width: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+    <a  href="{% url 'home' %}">HOME</a>
+    <a  href="{% url 'cocktail' %}">COCKTAIL HOME</a>
+  </center>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  {% if data %}
+  Given Data: {{ data }}<br>
+  {% endif %}
+
+
+  <div class="container">
+    <div id="array-container"></div>
+    <br>
+    <button onclick="cocktailSort()">Cocktail Sort</button>
+  </div>
+
+  <script>
+    let array1 = "{{data}}";
+    var array = array1.split(',').map(Number); // Convert strings to integers
+
+    function generateArray() {
+      const arrayContainer = document.getElementById("array-container");
+      arrayContainer.innerHTML = "";
+      for (let i = 0; i < array.length; i++) {
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        bar.style.height = `${array[i] * 5}px`; // Adjust height multiplier as needed
+        arrayContainer.appendChild(bar);
+      }
+    }
+
+    function swap(i, j) {
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+
+    async function cocktailSort() {
+      const bars = document.querySelectorAll(".bar");
+      let sorted = false;
+      let start = 0;
+      let end = array.length - 1;
+      while (!sorted) {
+        sorted = true;
+        for (let i = start; i < end; i++) {
+          if (array[i] > array[i + 1]) {
+            swap(i, i + 1);
+            bars[i].style.height = `${array[i] * 5}px`;
+            bars[i + 1].style.height = `${array[i + 1] * 5}px`;
+            sorted = false;
+          }
+        }
+        if (sorted) break;
+        sorted = true;
+        end--;
+        for (let i = end - 1; i >= start; i--) {
+          if (array[i] > array[i + 1]) {
+            swap(i, i + 1);
+            bars[i].style.height = `${array[i] * 5}px`;
+            bars[i + 1].style.height = `${array[i + 1] * 5}px`;
+            sorted = false;
+          }
+        }
+        start++;
+        await new Promise(resolve => setTimeout(resolve, 100)); // Adjust delay as needed
+      }
+    }
+
+    generateArray();
+  </script>
+
+<h3>Steps:</h3>
+<ol>
+  {% for i in extra_list %}
+  <li>{{ i }}</li><br>
+  {% endfor %}
+</ol>
+
+</body>
+
+</html>

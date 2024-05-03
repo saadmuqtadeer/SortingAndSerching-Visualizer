@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>
+            Pancake Sort
+        </title>
+        <style>
+            .button_sort {
+            float: left;
+            width: 50%;
+        }
+
+        .sort {
+            display: inline-block;
+            width: 70px;
+            height: 30px;
+            margin: 1px;
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid blue;
+            border-radius: 5px;
+            background-color: lightblue;
+            color: blue;
+            font-weight: bold;
+        }
+        </style>
+    </head>
+    <body>
+        <center>
+            <a  href="{% url 'home' %}">HOME</a>
+          </center>
+        <div class="button_sort">
+            <button><a href="{% url 'pancake_sort' %}" class='sort'>Pancake Sort</a></button> 
+        <button><a  href="{% url 'pancake_sort_string' %}" class='sort'>Pancake String</a></button>
+        </div>
+        
+    </body>
+</html>
