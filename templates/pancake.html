@@ -1,38 +1,37 @@
-<html>
-    <head>
-        <title>
-            Pancake Sort
-        </title>
-        <style>
-            .button_sort {
-            float: left;
-            width: 50%;
-        }
+{% extends 'base.html' %}
+{% block title %}
+Pancake Sort
+{% endblock %}
+{% block content %}
 
-        .sort {
-            display: inline-block;
-            width: 70px;
-            height: 30px;
-            margin: 1px;
-            padding: 8px;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid blue;
-            border-radius: 5px;
-            background-color: lightblue;
-            color: blue;
-            font-weight: bold;
-        }
-        </style>
-    </head>
-    <body>
-        <center>
-            <a  href="{% url 'home' %}">HOME</a>
-          </center>
-        <div class="button_sort">
-            <button><a href="{% url 'pancake_sort' %}" class='sort'>Pancake Sort</a></button> 
-        <button><a  href="{% url 'pancake_sort_string' %}" class='sort'>Pancake String</a></button>
+<style>
+    /* Custom styles to center content */
+    .centered-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Apply background image to the body */
+    body {
+        background-image: url('your_background_image_url_here.jpg');
+        background-size: cover; /* Cover the entire viewport */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Do not repeat the background image */
+    }
+</style>
+
+<div class="centered-container">
+    <div class="text-center">
+        <div class="mb-3">
+            <a href="{% url 'home' %}" class="btn btn-primary">HOME</a>
         </div>
-        
-    </body>
-</html>
+        <div class="mb-3">
+            <button><a href="{% url 'pancake_sort' %}" class='btn btn-primary'>Pancake Sort</a></button> 
+            <button><a  href="{% url 'pancake_sort_string' %}" class='btn btn-primary'>Pancake String</a></button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

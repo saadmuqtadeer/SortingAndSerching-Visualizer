@@ -1,37 +1,38 @@
-<html>
-    <head>
-        <title>
-            Odd Even Sort
-        </title>
-        <style>
-            .button_sort {
-            float: left;
-            width: 50%;
-        }
+{% extends 'base.html' %}
+{% block title %}
+Odd Even Sort
+{% endblock %}
+{% block content %}
 
-        .sort {
-            display: inline-block;
-            width: 70px;
-            height: 30px;
-            margin: 1px;
-            padding: 8px;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid blue;
-            border-radius: 5px;
-            background-color: lightblue;
-            color: blue;
-            font-weight: bold;
-        }
-        </style>
-    </head>
-    <body>
-        <center>
-            <a  href="{% url 'home' %}">HOME</a>
-          </center>
-        <div class="button_sort">
-            <button><a href="{% url 'odd_even' %}" class='sort'>Odd-Even Sort</a></button> 
-            <button><a  href="{% url 'odd_even_string' %}" class="sort">Odd-Even String</a></button>  
+<style>
+    /* Apply background image to the body */
+    body {
+        background-image: url('your_bg_image_url_here.jpg');
+        background-size: cover; /* Cover the entire viewport */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Do not repeat the background image */
+    }
+
+    /* Custom styles to center content */
+    .centered-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<div class="centered-container">
+    <div class="text-center">
+        <div class="mb-3">
+            <p class="text-white">Sort Integers:</p>
+            <a href="{% url 'odd_even' %}" class="btn btn-primary">Odd-Even Sort</a>
         </div>
-    </body>
-</html>
+        <div class="mb-3">
+            <p class="text-white">Sort Strings:</p>
+            <a href="{% url 'odd_even_string' %}" class="btn btn-primary">Odd-Even String</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

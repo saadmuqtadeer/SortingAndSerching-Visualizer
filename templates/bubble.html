@@ -1,41 +1,39 @@
-<html>
-    <head>
-        <title>
-            Bubble Sort
-        </title>
-        <style>
-            .button_sort {
-            float: left;
-            width: 50%;
-        }
+{% extends 'base.html' %}
+{% block title %}
+Bubble Sort
+{% endblock %}
+{% block content %}
 
-        .sort {
-            display: inline-block;
-            width: 70px;
-            height: 30px;
-            margin: 1px;
-            padding: 8px;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid blue;
-            border-radius: 5px;
-            background-color: lightblue;
-            color: blue;
-            font-weight: bold;
-        }
-        </style>
-        
+<style>
+    /* Custom styles to center content */
+    .centered-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 
-    </head>
-    <body>
-        <center>
-            <a  href="{% url 'home' %}">HOME</a>
-          </center>
-        <div class="button_sort">
-            <button><a href="{% url 'bubble_sort' %}" class='sort'>Bubble Sort</a></button> 
-            <button><a  href="{% url 'bubble_sort_string' %}"class='sort'>Bubble String</a></button>
+    /* Apply background image to the body */
+    body {
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Bubblesort-edited-color.svg/1200px-Bubblesort-edited-color.svg.png');
+        background-size: cover; /* Cover the entire viewport */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Do not repeat the background image */
+    }
+</style>
+
+<div class="centered-container">
+    <div class="text-center">
+        <div class="mb-3">
+            <p>Sort Integers:</p>
+            <a href="{% url 'bubble_sort' %}" class="btn btn-primary">Bubble Sort for Integers</a>
         </div>
-        
-        
-    </body>
-</html>
+        <div class="mb-3">
+            <p>Sort Strings:</p>
+            <a href="{% url 'bubble_sort_string' %}" class="btn btn-primary">Bubble Sort for characters/string</a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

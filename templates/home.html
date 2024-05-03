@@ -1,107 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algorithm</title>
-    <style>
-        /* .navbar {
-            background-color: lightblue;
-            overflow: hidden;
-          
-        } */
+{% extends 'base.html' %}
+{% block title %}
+  Algorithm
+{% endblock %}
+{% block content %}
+  <style>
+    .custom-heading {
+      font-family: 'Montserrat', sans-serif;
+      color: black; /* Change to black */
+    }
+    body {
+      background-image: url('https://banner2.cleanpng.com/20180409/yye/kisspng-graduate-aptitude-test-in-engineering-gate-joint-college-student-5acc173b084540.2502445715233247310339.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        {% comment %} <h1 class="text-primary">SORTING TECHNIQUES</h1> {% endcomment %}
+        <h1 class="custom-heading display-5 fw-bold">SORTING TECHNIQUES</h1>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Bubble Sort</h5>
+            <p class="card-text">Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.</p>
+            <button class="btn btn-primary"><a href="{% url 'bubble' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Odd Even Sort</h5>
+            <p class="card-text">Odd Even Sort is a parallel sorting algorithm that works by comparing and swapping adjacent elements in parallel, allowing for faster sorting.</p>
+            <button class="btn btn-primary"><a href="{% url 'oddeven' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Selection Sort</h5>
+            <p class="card-text">Selection Sort is a simple sorting algorithm that divides the input list into two parts: the sorted part at the beginning and the unsorted part at the end. It repeatedly selects the smallest element from the unsorted portion and moves it to the sorted portion.</p>
+            <button class="btn btn-primary"><a href="{% url 'selection' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
 
-        .navbar a {
-            float: left;
-            display: block;
-            color: blue;
-            text-align: center;
-            padding: 14px 46px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Insertion Sort</h5>
+            <p class="card-text">Insertion Sort is a simple sorting algorithm that builds the final sorted list one element at a time. It iterates over each element in the list, shifting larger elements to the right and inserting the current element into its correct position.</p>
+            <button class="btn btn-primary"><a href="{% url 'insertion' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
 
-        .navbar a:hover {
-            background-color: blue;
-            color: white;
-        }
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Quick Sort</h5>
+            <p class="card-text">Quick Sort is a highly efficient sorting algorithm that uses divide and conquer to sort elements. It selects a pivot element and partitions the array into two sub-arrays: elements less than the pivot and elements greater than the pivot.</p>
+            <button class="btn btn-primary"><a href="{% url 'quick' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
 
-        .button_sort {
-            float: left;
-            width: 50%;
-        }
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Cocktail Sort</h5>
+            <p class="card-text">Cocktail Sort, also known as Bidirectional Bubble Sort, is a variation of Bubble Sort that works bidirectionally. It repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.</p>
+            <button class="btn btn-primary"><a href="{% url 'cocktail' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
 
-        .algorithms {
-            float: right;
-            width: 50%;
-            margin-top: 25px;
-        }
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Shell Sort</h5>
+            <p class="card-text">Shell Sort, also known as diminishing increment sort, is a variation of Insertion Sort that sorts distant elements first and then sorts elements that are closer. It starts by sorting pairs of elements far apart from each other and progressively reduces the gap between elements to be compared.</p>
+            <button class="btn btn-primary"><a href="{% url 'shell' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
 
-        .sort {
-            display: inline-block;
-            width: 70px;
-            height: 40px;
-            margin: 1px;
-            padding: 8px;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid blue;
-            border-radius: 5px;
-            background-color: lightblue;
-            color: blue;
-            font-weight: bold;
-        }
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Pancake Sort</h5>
+            <p class="card-text">Pancake Sort is a sorting algorithm that sorts a stack of pancakes with the objective of sorting the pancakes in ascending order of size. It can flip the pancakes either from the top or from any position in the stack.</p>
+            <button class="btn btn-primary"><a href="{% url 'pancake' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
 
-        .sort:hover {
-            background-color: blue;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <!-- <div class="navbar">
-        <a href="#home">Home</a> -->
-        
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Comb Sort</h5>
+            <p class="card-text">Comb Sort is a variation of Bubble Sort that improves on its performance by using a gap sequence to eliminate small turtles (small values near the end of the list). It repeatedly compares and swaps adjacent elements with a decreasing gap until the gap becomes 1.</p>
+            <button class="btn btn-primary"><a href="{% url 'comb' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Bogo Sort</h5>
+            <p class="card-text">Bogo Sort, also known as permutation sort or stupid sort, is a highly inefficient sorting algorithm that generates random permutations of the input list and checks if the list is sorted. It continues this process until the list becomes sorted.</p>
+            <button class="btn btn-primary"><a href="{% url 'bogo' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+        <!-- Add similar cards for other sorting algorithms -->
+      </div>
+      <div class="col">
+        {% comment %} <h1 class="text-primary">SEARCHING TECHNIQUES</h1> {% endcomment %}
+        <h1 class="custom-heading display-5 fw-bold">SEARCHING TECHNIQUES</h1>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Linear Search</h5>
+            <p class="card-text">Linear Search is a simple searching algorithm that sequentially checks each element of the list until a match is found or the whole list has been searched.</p>
+            <button class="btn btn-primary"><a href="{% url 'linear_search' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Binary Search</h5>
+            <p class="card-text">Binary Search is a fast searching algorithm that works on sorted arrays. It repeatedly divides the search interval in half until the target element is found.</p>
+            <button class="btn btn-primary"><a href="{% url 'binary_search' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Breadth First Search</h5>
+            <p class="card-text">Breadth First Search is a graph traversal algorithm that explores all the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.</p>
+            <button class="btn btn-primary"><a href="{% url 'breadth_first_search' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Depth First Search</h5>
+            <p class="card-text">Depth First Search is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It traverses through one branch of the tree until it reaches the end before moving to the next branch.</p>
+            <button class="btn btn-primary"><a href="{% url 'depth_first_search' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">A*</h5>
+            <p class="card-text">A* (A-star) is a graph traversal and path search algorithm that evaluates and explores nodes in order of their cost to reach the goal, combined with a heuristic that estimates the cost from the current node to the goal.</p>
+            <button class="btn btn-primary"><a href="{% url 'a_star' %}" class="text-white text-decoration-none">Learn more</a></button>
+          </div>
+        </div>
+
+        <!-- Add similar cards for other searching algorithms -->
+      </div>
     </div>
-
-    <div class="button_sort">
-        <br>
-        <h1 style="color: blue;" id="sorting">SORTING</h1>
-        <h1 style="color: blue;" id="sorting"> TECHNIQUES</h1>
-        <button><a href="{% url 'bubble' %}" class='sort'>Bubble Sort</a></button>
-        <br>
-        <button><a href="{% url 'oddeven' %}" class='sort'>Odd Even Sort</a></button>
-        <br> 
-        <button><a href="{% url 'selection' %}" class='sort'>Selection Sort</a></button>
-        <br> 
-        <button><a href="{% url 'insertion' %}" class='sort'>Insertion Sort</a></button> 
-        <br>
-        <button><a href="{% url 'quick' %}" class='sort'>Quick Sort</a></button> 
-        <br>
-        <button><a href="{% url 'cocktail' %}" class='sort'>Cocktail Sort</a></button> 
-        <br>
-        <button><a href="{% url 'shell' %}" class='sort'>Shell Sort</a></button> 
-        <br>
-        <button><a href="{% url 'pancake' %}" class='sort'>Pancake Sort</a></button> 
-        <br>
-        <button><a href="{% url 'comb' %}" class='sort'>Comb Sort</a></button> 
-        <br>
-        <button><a href="{% url 'bogo' %}" class='sort'>Bogo Sort</a></button> 
-    </div>
-    <div class="algorithms">
-        <h1 style="color: blue;" id="algorithms">SEARCHING</h1>
-        <h1 style="color: blue;" id="sorting"> TECHNIQUES</h1>
-        <button><a href="{% url 'linear_search' %}" class='sort'>Linear Search</a></button>
-        <br> 
-        <button><a href="{% url 'binary_search' %}" class='sort'>Binary Search</a></button>
-        <br> 
-        <button><a href="{% url 'breadth_first_search' %}" class='sort'>Breadth First Search</a></button>
-        <br> 
-        <button><a href="{% url 'depth_first_search' %}" class='sort'>Depth First Search</a></button>
-        <br> 
-        <!-- <button><a href="{% url 'a_star' %}" class='sort'>A*</a></button> -->
-    </div>
-
-</body>
-</html>
+  </div>
+{% endblock %}
